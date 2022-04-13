@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OfertasService } from '../ofertas.service';
+import { Oferta } from '../shared/oferta.model';
 
 @Component({
   selector: 'app-restaurantes',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestaurantesComponent implements OnInit {
 
-  constructor() { }
+  public restOfertas: Oferta[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private ofertasService: OfertasService
+  ) { }
+
+  async ngOnInit() {
+    this.restOfertas = await this.ofertasService.getOfertasPorCategoria('restaurante');
+  
+    console.log(this.restOfertas);
   }
 
 }

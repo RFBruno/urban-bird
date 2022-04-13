@@ -2,7 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Oferta } from "./shared/oferta.model";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class OfertasService {
 
     constructor(
@@ -15,6 +17,12 @@ export class OfertasService {
         return this.http.get('http://localhost:3000/ofertas?destaque=true')
         .toPromise()
         .then((resposta:any) => resposta);
+    }
+
+    public getOfertasPorCategoria(categoria: string): Promise<Oferta[]>{
+        return this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`)
+            .toPromise()
+            .then((resposta:any) => resposta);
     }
 
     // Exemplo de promise
