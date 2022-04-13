@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { OfertasService } from '../ofertas.service';
+import { Oferta } from '../shared/oferta.model';
 
 @Component({
   selector: 'app-oferta',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OfertaComponent implements OnInit {
 
-  constructor() { }
+  public oferta: Oferta = new Oferta;
 
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute,
+    private ofertasService: OfertasService
+  ) { }
+
+  async ngOnInit(){
+    const id = this.route.snapshot.params.id;
+    this.oferta = await this.ofertasService.getOferta(id);
   }
 
 }

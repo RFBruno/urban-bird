@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Oferta } from "./shared/oferta.model";
+import { environment as env } from '../environments/environment'
 
 @Injectable({
     providedIn: 'root'
@@ -14,13 +15,19 @@ export class OfertasService {
     public ofertas: Oferta[] = [];
 
     public getOfertas(): Promise<Oferta[]> {
-        return this.http.get('http://localhost:3000/ofertas?destaque=true')
+        return this.http.get(`${env.URL_API}?destaque=true`)
         .toPromise()
         .then((resposta:any) => resposta);
     }
 
     public getOfertasPorCategoria(categoria: string): Promise<Oferta[]>{
-        return this.http.get(`http://localhost:3000/ofertas?categoria=${categoria}`)
+        return this.http.get(`${env.URL_API}?categoria=${categoria}`)
+            .toPromise()
+            .then((resposta:any) => resposta);
+    }
+
+    public getOferta(id:number): Promise<Oferta>{
+        return this.http.get(`${env.URL_API}/${id}`)
             .toPromise()
             .then((resposta:any) => resposta);
     }
