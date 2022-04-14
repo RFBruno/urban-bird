@@ -15,21 +15,33 @@ export class OfertasService {
     public ofertas: Oferta[] = [];
 
     public getOfertas(): Promise<Oferta[]> {
-        return this.http.get(`${env.URL_API}?destaque=true`)
+        return this.http.get(`${env.URL_API}/ofertas?destaque=true`)
         .toPromise()
         .then((resposta:any) => resposta);
     }
 
     public getOfertasPorCategoria(categoria: string): Promise<Oferta[]>{
-        return this.http.get(`${env.URL_API}?categoria=${categoria}`)
+        return this.http.get(`${env.URL_API}/ofertas?categoria=${categoria}`)
             .toPromise()
             .then((resposta:any) => resposta);
     }
 
     public getOferta(id:number): Promise<Oferta>{
-        return this.http.get(`${env.URL_API}/${id}`)
+        return this.http.get(`${env.URL_API}/ofertas/${id}`)
             .toPromise()
             .then((resposta:any) => resposta);
+    }
+
+    public getComoUserOferta(id: number): Promise<string>{
+        return this.http.get(`${env.URL_API}/como-usar/${id}`)
+            .toPromise()
+            .then((resposta:any) => resposta.descricao);
+    }
+
+    public getOndeFicaOferta(id: number): Promise<string>{
+        return this.http.get(`${env.URL_API}/onde-fica/${id}`)
+            .toPromise()
+            .then((resposta:any) => resposta.descricao);
     }
 
     // Exemplo de promise
