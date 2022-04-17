@@ -1,10 +1,23 @@
 <div class="fixed-top bg-white">
   <nav class="navbar navbar-light bg-faded">
     <div class="container">
-      <a routerLink="/" class="navbar-brand">
-        <img src="/assets/logo.png" />
-      </a>
-      <a href="#"><img src="/assets/carrinho.png" /></a>
+      <div class="col-md-4">
+        <a routerLink="/" class="navbar-brand">
+          <img src="/assets/logo.png" />
+        </a>
+      </div>
+      
+      <div class="col-md-6">
+        <input type="text" class="form-control"
+               placeholder="Pesquisar ofertas..."
+               #termoPesquisa
+               (keyup)="pesquisar(termoPesquisa.value)"
+               >
+      </div>
+
+      <div class="col-md-2">
+        <a href="#"><img src="/assets/carrinho.png" /></a>
+      </div>
     </div>
   </nav>
 

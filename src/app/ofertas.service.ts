@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Oferta } from "./shared/oferta.model";
 import { environment as env } from '../environments/environment'
+import { Observable } from "rxjs";
+
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +44,11 @@ export class OfertasService {
         return this.http.get(`${env.URL_API}/onde-fica/${id}`)
             .toPromise()
             .then((resposta:any) => resposta.descricao);
+    }
+
+    public pesquisaOfertas(termo: string): Observable<Oferta[]>{
+        return this.http.get(`${env.URL_API}/ofertas?descricao_oferta_like=${termo}`)
+            .pipe((resposta:any) => resposta);
     }
 
     // Exemplo de promise

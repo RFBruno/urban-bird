@@ -20,6 +20,7 @@ export class OfertaComponent implements OnInit {
   async ngOnInit(){
     const id = this.route.snapshot.params.id;
     this.oferta = await this.ofertasService.getOferta(id);
+    
   }
 
 }
