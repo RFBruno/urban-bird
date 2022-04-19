@@ -12,7 +12,14 @@
                placeholder="Pesquisar ofertas..."
                #termoPesquisa
                (keyup)="pesquisar(termoPesquisa.value)"
-               >
+        />
+
+        <ul class="list-group" style="position: absolute;">
+          <li class="list-group-item" *ngFor="let oferta of ofertasList" >
+            {{ oferta.titulo }}
+          </li>
+        </ul>
+
       </div>
 
       <div class="col-md-2">
