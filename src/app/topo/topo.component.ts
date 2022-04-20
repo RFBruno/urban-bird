@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 export class TopoComponent implements OnInit {
 
   public ofertas: Observable<Oferta[]> = of<Oferta[]>([]);
-  public ofertasList: Oferta[] = [];
+  
   private subjectOfertas: Subject<string> = new Subject<string>();
 
   constructor(
@@ -24,7 +24,7 @@ export class TopoComponent implements OnInit {
   async ngOnInit() {
     this.ofertas = this.subjectOfertas
       .pipe(
-        debounceTime(1000)
+        debounceTime(500)
       )
       .pipe(
         distinctUntilChanged()
@@ -45,15 +45,14 @@ export class TopoComponent implements OnInit {
           return of<Oferta[]>([]);
         })
       )
-
-    this.ofertas.subscribe((ofertas:Oferta[]) =>{
-      console.log(ofertas)
-      this.ofertasList = ofertas;
-    });
   }
 
   public pesquisar(termo: string): void{
    this.subjectOfertas.next(termo);
+  }
+
+  public limpaPesquisa(): void{
+    this.subjectOfertas.next('');
   }
 
 }

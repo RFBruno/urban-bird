@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { OfertasService } from 'src/app/ofertas.service';
 
 @Component({
@@ -16,10 +16,11 @@ export class ComoUsarComponent implements OnInit {
     private ofertasService: OfertasService
   ) { }
 
-  async ngOnInit(){
-    const ofertaId = this.route.parent?.snapshot.params.id; 
+  ngOnInit(){
+    this.route.parent?.params.subscribe(async (parametros: Params) =>{
+      this.comoUsar = await this.ofertasService.getComoUserOferta(parametros.id);
+    }); 
 
-    this.comoUsar = await this.ofertasService.getComoUserOferta(ofertaId);
   }
 
 }
