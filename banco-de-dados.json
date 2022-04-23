@@ -192,6 +192,34 @@
       "complemento": "aet",
       "formaDePagamento": "dinheiro",
       "id": 1
+    },
+    {
+      "endereco": "teste",
+      "numero": "t",
+      "complemento": "t",
+      "formaDePagamento": "dinheiro",
+      "id": 2
+    },
+    {
+      "endereco": "rua abc",
+      "numero": "10",
+      "complemento": "",
+      "formaDePagamento": "dinheiro",
+      "id": 3
+    },
+    {
+      "endereco": "Rua teste Completo",
+      "numero": "10",
+      "complemento": "",
+      "formaDePagamento": "dinheiro",
+      "id": 4
+    },
+    {
+      "endereco": "Rua teste 3000",
+      "numero": "10",
+      "complemento": null,
+      "formaDePagamento": "dinheiro",
+      "id": 5
     }
   ]
 }

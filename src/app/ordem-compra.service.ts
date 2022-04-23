@@ -16,6 +16,6 @@ export class OrdemCompraService {
 
   public efetivarCompra(pedido: Pedido): Observable<any> {
     return this.http.post(`${env.URL_API}/pedidos`,pedido)
-        .pipe(map((resposta: any) => console.log(resposta)))
+        .pipe(map((resposta: any) => resposta.id));
   }
 }

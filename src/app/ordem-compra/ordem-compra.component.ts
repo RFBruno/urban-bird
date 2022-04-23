@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { OrdemCompraService } from '../ordem-compra.service';
 import { Pedido } from '../shared/pedido.model';
 
@@ -9,25 +10,13 @@ import { Pedido } from '../shared/pedido.model';
 })
 export class OrdemCompraComponent implements OnInit {
 
-  public pedido: Pedido = new Pedido('','','','');
-
-  public endereco: string = '';
-  public numero: string = '';
-  public complemento: string = '';
-  public formaDePagamento: string = '';
-
-  public endIsValid: boolean = false;
-  public numIsValid: boolean = false;
-  public compIsValid: boolean = false;
-  public formaIsValid: boolean = false;
-
-  public endPrimitivo: boolean = true;
-  public numPrimitivo: boolean = true;
-  public compPrimitivo: boolean = true;
-  public formaPrimitivo: boolean = true;
-
-  formEstado: string = 'disabled';
-
+   public idPedido?: number;  
+   public formulario: FormGroup = new FormGroup({
+     'endereco': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]),
+     'numero': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(10)]),
+     'complemento': new FormControl(null),
+     'formaPagamento': new FormControl(null, [Validators.required]),
+   });
 
   constructor(
     private ordemCompraService: OrdemCompraService
@@ -36,69 +25,25 @@ export class OrdemCompraComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public atualizaEndereco(value:string): void{
-     this.endereco = value;
-     this.endPrimitivo = false;
-
-     if(this.endereco.length > 3){
-       this.endIsValid = true;
-     }else{
-       this.endIsValid = false;
-     }
-
-     this.habilitaForm();
-  }
-  public atualizaNumero(value:string): void{
-     this.numero = value;
-     this.numPrimitivo = false;
-
-     if(this.numero.length >= 1){
-      this.numIsValid = true;
-    }else{
-      this.numIsValid = false;
-    }
-
-     this.habilitaForm();
-  }
-  public atualizaComplemento(value:string): void{
-     this.complemento = value;
-     this.compPrimitivo = false;
-
-     if(this.complemento.length >= 1){
-      this.compIsValid = true;
-    }else{
-      this.compIsValid = false;
-    }
-     this.habilitaForm();
-  }
-
-  public atualizaFormaDePagamento(value: string): void{
-    this.formaDePagamento = value;
-    this.formaPrimitivo = false;
-    
-    if(this.formaDePagamento === 'dinheiro' || this.formaDePagamento === 'debito'){
-      this.formaIsValid = true;
-    }else{
-      this.formaIsValid = false;
-    }
-    this.habilitaForm();
-  }
-
-  public habilitaForm(): void{
-    if(this.endereco && this.numero && this.formaDePagamento){
-      this.formEstado = '';
-    }else{
-      this.formEstado = 'disabled';
-    }
-  }
-
   public confirmarCompra(): void{
-    this.pedido.endereco = this.endereco;
-    this.pedido.numero = this.numero;
-    this.pedido.complemento = this.complemento;
-    this.pedido.formaDePagamento = this.formaDePagamento;
+    console.log(this.formulario);
+    if(this.formulario.status === 'INVALID'){
+      let campos = this.formulario.controls;
+      Object.keys(campos).forEach(campo =>{
+        this.formulario.get(campo)?.markAsTouched();
+      })
+    }else{
+      let pedido: Pedido = new Pedido(
+        this.formulario.value.endereco,
+        this.formulario.value.numero,
+        this.formulario.value.complemento,
+        this.formulario.value.formaPagamento,
+      );
 
-    this.ordemCompraService.efetivarCompra(this.pedido).subscribe();
+      this.ordemCompraService.efetivarCompra(pedido).subscribe((idPedido: number) =>{
+        this.idPedido = idPedido;
+      })
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="ordem-compra my-5">
-    <form novalidate>
+  <div class="ordem-compra my-5" *ngIf="!idPedido">
+    <form [formGroup]="formulario" novalidate (ngSubmit)="confirmarCompra()">
     
       <h5>Sua Compra</h5>
       <hr />
@@ -62,32 +62,30 @@
       </div>
       <br />
 
-
       <h5>Dados de entrega</h5>
       <hr />
 
       <div class="row">
 
         <div class="form-group col-md-6 ">
-          <input type="text" class="form-control {{ endPrimitivo ? '' : (endIsValid ? 'is-valid' : 'is-invalid') }}" placeholder="Endereço"
-                 autocomplete="off" minlength="5" required
-                 #inputEndereco
-                 [value]="endereco" (input)="atualizaEndereco(inputEndereco.value)">
+          <input type="text" class="form-control {{formulario.get('endereco')?.untouched ? '' : formulario.get('endereco')?.valid ? 'is-valid' : 'is-invalid'}} " placeholder="Endereço"
+                 autocomplete="off"
+                 formControlName="endereco"
+                 >
           <div class="invalid-feedback">Endereço inválido</div>
         </div>
 
         <div class="form-group col-md-2">
-          <input type="text" class="form-control {{numPrimitivo ? '' :  (numIsValid ? 'is-valid' : 'is-invalid')}}" placeholder="Número"
-                 autocomplete="off" minlength="1" required
-                  #inputNumero
-                 [value]="numero" (input)="atualizaNumero(inputNumero.value)">
+          <input type="text" class="form-control {{formulario.get('numero')?.untouched ? '' : formulario.get('numero')?.valid ? 'is-valid' : 'is-invalid'}}" placeholder="Número"
+                 autocomplete="off"
+                 formControlName="numero" 
+                 >
           <div class="invalid-feedback">Número inválido</div>
         </div>
 
         <div class="form-group col-md-4">
-          <input type="text" class="form-control {{compPrimitivo ? '' : (compIsValid ? 'is-valid' : '')}}" placeholder="Complemento" autocomplete="off"
-          #inputComplemento
-          [value]="complemento" (input)="atualizaComplemento(inputComplemento.value)"
+          <input type="text" class="form-control  " placeholder="Complemento" autocomplete="off"
+          formControlName="complemento"
           >
         </div>
 
@@ -98,24 +96,27 @@
       <hr />
 
       <div class="form-row">
-          
         <div class="form-group col-md-4">
-          <select class="form-control {{formaPrimitivo ? '' : (formaIsValid ? 'is-valid' : 'is-invalid')}}"
-            #selectFormaDePagamento
-            (change)="atualizaFormaDePagamento(selectFormaDePagamento.value)"
+          <select class="form-control {{formulario.get('formaPagamento')?.untouched ? '' : formulario.get('formaPagamento')?.valid ? 'is-valid' : 'is-invalid'}}"
+          formControlName="formaPagamento"
           >
-            <option value="">Selecione uma opção</option>
-            <option value="dinheiro" [selected]="formaDePagamento == 'dinheiro' ? 'checked' : '' ">Dinheiro</option>
-            <option value="debito" [selected]="formaDePagamento == 'debito' ? 'checked' : '' ">Débito</option>
-          </select>
-
-          <div class="invalid-feedback">Selecione uma forma de pagamento</div>
-        </div>
+          <option value="" disabled>Selecione uma opção</option>
+          <option value="dinheiro" >Dinheiro</option>
+          <option value="debito" >Débito</option>
+        </select>
+        
+        <div class="invalid-feedback">Selecione uma forma de pagamento</div>
       </div>
+    </div>
+    
+    <hr />
 
-      <hr />
-      <button type="button" class="btn btn-primary btn-lg mb-5 mt-3" [disabled]="formEstado"
-              (click)="confirmarCompra()">Cofirmar compra</button>
-    </form>
+    <button type="submit" class="btn btn-primary btn-lg mb-5 mt-3" 
+    >Cofirmar compra</button>
+  </form>
+  </div>
+
+  <div *ngIf="idPedido">
+    <app-ordem-compra-sucesso [idPedidoCompra]="idPedido"></app-ordem-compra-sucesso>
   </div>
 </div>
