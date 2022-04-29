@@ -220,6 +220,25 @@
       "complemento": null,
       "formaDePagamento": "dinheiro",
       "id": 5
+    },
+    {
+      "endereco": "Rua teste",
+      "numero": "100",
+      "complemento": null,
+      "formaDePagamento": "dinheiro",
+      "itens": [
+        {
+          "id": 4,
+          "img": {
+            "url": "/assets/ofertas/4/img1.jpg"
+          },
+          "titulo": "Estância das águas",
+          "descricao_oferta": "Diversão garantida com piscinas, trilhas e muito mais.",
+          "valor": 31.9,
+          "quantidade": 4
+        }
+      ],
+      "id": 6
     }
   ]
 }

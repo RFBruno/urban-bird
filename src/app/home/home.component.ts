@@ -20,14 +20,11 @@ export class HomeComponent implements OnInit {
     this.ofertasService.getOfertas()
     .then(
       (ofertas: Oferta[]) => {
-        console.log('Executada após o retorno da promessa');
         this.ofertas = ofertas
       })
     .catch(
       (param: any) => console.log(param)
     );
-
-    console.log(this.ofertas);
   }
 
 }
